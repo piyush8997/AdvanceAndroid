@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    tools:context=".GridImageActivity"
+    android:layout_height="match_parent">
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_width="400dp"
+        android:name="com.piyush.fragmentudacity.MasterListFragment"
+        android:id="@+id/master_list_frag"/>
+    
+    <!--Divider workaround-->
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"/>
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/two_pane_linear_layout"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+        <!--Head Fragment Container-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:id="@+id/headFragContainer"/>
+
+        <!--Body Fragment Container-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:id="@+id/bodyFragContainer"/>
+
+        <!--Legs Fragment Container-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:id="@+id/legsFragContainer"/>
+    </LinearLayout>
+</LinearLayout>
