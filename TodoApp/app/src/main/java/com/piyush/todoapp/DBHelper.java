@@ -61,4 +61,17 @@ public class DBHelper extends SQLiteOpenHelper {
         c.close();
         return noteList;
     }
+
+    public long deleteNode(String id){
+        SQLiteDatabase database = getWritableDatabase();
+        return database.delete(Statics.TABLE_NAME, Statics.COL_NOTE_ID+"=?", new String[]{id});
+    }
+
+    public long updateNote(String id, String title, String note){
+        SQLiteDatabase database = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Statics.COL_NOTE_TITLE, title);
+        contentValues.put(Statics.COL_NOTE_TEXT, note);
+        return database.update(Statics.TABLE_NAME, contentValues, Statics.COL_NOTE_ID+"=?", new String[]{id});
+    }
 }
