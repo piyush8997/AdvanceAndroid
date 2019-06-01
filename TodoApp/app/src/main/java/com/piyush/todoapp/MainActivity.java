@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton btnAddNote;
     RecyclerView notesRecyclerView;
     FragmentManager fragmentManager;
+    TextView tvNotice;
 
     NotesAdapter adapter;
     List<Note> noteList;
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         btnAddNote = findViewById(R.id.btn_add_note);
         notesRecyclerView = findViewById(R.id.recycler_view);
+        tvNotice = findViewById(R.id.tv_notice);
+
         fragmentManager = getSupportFragmentManager();
 
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -50,6 +54,12 @@ public class MainActivity extends AppCompatActivity {
         DBHelper helper = DBHelper.getDBInstance(MainActivity.this);
         List<Note> noteList = helper.getNotes();
         adapter.updateDataSet(noteList);
+
+        if(noteList.size()>0){
+            tvNotice.setVisibility(View.INVISIBLE);
+        }else{
+            tvNotice.setVisibility(View.VISIBLE);
+        }
 
         btnAddNote.setOnClickListener(new View.OnClickListener() {
             @Override

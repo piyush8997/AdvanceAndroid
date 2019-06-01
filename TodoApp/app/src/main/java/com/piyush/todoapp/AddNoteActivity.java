@@ -1,7 +1,9 @@
 package com.piyush.todoapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +13,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class AddNoteActivity extends AppCompatActivity{
+public class AddNoteActivity extends AppCompatActivity {
 
     FloatingActionButton btnSaveNote, btnDeleteNote;
     EditText edNoteTitle, edNoteText;
@@ -47,21 +49,39 @@ public class AddNoteActivity extends AppCompatActivity{
             btnDeleteNote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String id = String.valueOf(mBundle.getInt("note_id"));
-                    long n = helper.deleteNode(id);
-                    if(n > 0){
-                        Toast.makeText(AddNoteActivity.this,
-                                "Note deleted successfully",
-                                Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(AddNoteActivity.this,
-                                "Something went wrong",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                    finish();
+                    final String id = String.valueOf(mBundle.getInt("note_id"));
+
+                    //Alert Dialog for final confirmation.
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext())
+                            .setTitle("Confirmation")
+                            .setMessage("Are you sure you want to delete the note?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    long n = helper.deleteNote(id);
+                                    if (n > 0) {
+                                        Toast.makeText(AddNoteActivity.this,
+                                                "Note deleted successfully",
+                                                Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(AddNoteActivity.this,
+                                                "Something went wrong",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                    finish();
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setCancelable(false);
+                    builder.show();
                 }
             });
-        }else {
+        } else {
             btnDeleteNote.hide();
         }
 
@@ -79,9 +99,9 @@ public class AddNoteActivity extends AppCompatActivity{
                 }
 
                 long n;
-                if(mBundle != null){
-                    n = helper.updateNote(String.valueOf(mBundle.getInt("note_id")),title,text);
-                }else{
+                if (mBundle != null) {
+                    n = helper.updateNote(String.valueOf(mBundle.getInt("note_id")), title, text);
+                } else {
                     n = helper.addNote(title, text);
                 }
 

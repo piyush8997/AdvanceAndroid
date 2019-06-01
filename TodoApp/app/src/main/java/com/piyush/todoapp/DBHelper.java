@@ -62,7 +62,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return noteList;
     }
 
-    public long deleteNode(String id){
+    public long deleteNote(String id){
         SQLiteDatabase database = getWritableDatabase();
         return database.delete(Statics.TABLE_NAME, Statics.COL_NOTE_ID+"=?", new String[]{id});
     }

@@ -53,11 +53,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
                 @Override
                 public void onClick(View view) {
                     int pos = getAdapterPosition();
-
-                    String str = String.format(Locale.US,"%d | %s | %s",
-                            noteList.get(pos).getId(),noteList.get(pos).getTitle(),noteList.get(pos).getText());
-                    Toast.makeText(view.getContext(), str, Toast.LENGTH_SHORT).show();
-
                     Intent i = new Intent(view.getContext(), AddNoteActivity.class);
                     i.putExtra("note_id",noteList.get(pos).getId());
                     i.putExtra("note_title",noteList.get(pos).getTitle());
