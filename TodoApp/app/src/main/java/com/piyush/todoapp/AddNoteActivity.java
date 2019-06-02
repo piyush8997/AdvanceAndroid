@@ -2,7 +2,11 @@ package com.piyush.todoapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,14 +15,22 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AddNoteActivity extends AppCompatActivity {
 
-    FloatingActionButton btnSaveNote, btnDeleteNote;
+    FloatingActionButton btnSaveNote, btnDeleteNote, btnClickImage;
     EditText edNoteTitle, edNoteText;
     Bundle mBundle;
     DBHelper helper;
+
+    private static final int REQ_CODE_IMAGE_CAPTURE = 1111;
+    private static final String AUTHORITY = "com.piyush.todoapp.fileprovider";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +42,7 @@ public class AddNoteActivity extends AppCompatActivity {
         edNoteTitle = findViewById(R.id.ed_note_title);
         edNoteText = findViewById(R.id.ed_note_text);
         btnDeleteNote = findViewById(R.id.btn_delete_note);
+        btnClickImage = findViewById(R.id.btn_click_img);
 
         Intent i = getIntent();
         mBundle = i.getExtras();
@@ -115,6 +128,27 @@ public class AddNoteActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 }
                 finish();
+            }
+        });
+
+        btnClickImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if(i.resolveActivity(getPackageManager()) == null){
+                    Toast.makeText(AddNoteActivity.this, "No camera app found.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                String fileName = String.format("PIC_%s_",new SimpleDateFormat("yyyyMMDD_HHmmss",Locale.US).format(new Date()));
+                try{
+                    File file = File.createTempFile(fileName,".jpg",storageDir);
+                    Uri uri = FileProvider.getUriForFile(v.getContext(),AUTHORITY,file);
+                    i.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+                startActivityForResult(i, REQ_CODE_IMAGE_CAPTURE);
             }
         });
     }

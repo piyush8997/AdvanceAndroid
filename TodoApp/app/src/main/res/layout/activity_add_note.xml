@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
@@ -26,7 +25,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/edit_text_bg"
             android:hint="Title"
-            android:textSize="35dp" />
+            android:textSize="35sp" />
 
         <EditText
             android:id="@+id/ed_note_text"
@@ -64,7 +63,7 @@
             android:tint="#ffffff" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btn_save_note"
+            android:id="@+id/btn_click_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -73,8 +72,22 @@
             android:backgroundTint="#FF9800"
             android:clickable="true"
             android:focusable="true"
-            android:src="@drawable/round_done_outline_black"
+            android:src="@drawable/cam"
             android:tint="#ffffff" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/round_done_outline_black"
+            android:tint="#ffffff"
+            android:id="@+id/btn_save_note"
+            android:layout_margin="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#FF9800"
+            android:clickable="true"
+            android:focusable="true"/>
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
